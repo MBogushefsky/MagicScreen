@@ -18,11 +18,29 @@
 .current-date {
 	font-size: 3vw;
 	opacity: 0.75;
+	height: 10vh;
 }
 .current-time-hours-minutes {
 	font-size: 7vw;
 	text-align: right;
+	height: 20vh;
 }
 .current-time-seconds {
 	font-size: 3vw;
+}
+.wind-and-sets, .current-weather, .future-weather {
+	float: right;
+}
+.wind-and-sets {
+	font-size: 3vw;
+	opacity: 0.75;
+	height: 10vh;
+}
+.current-weather {
+	font-size: 5vw;
+	height: 20vh;
+}
+.future-weather {
+	font-size: 2vw;
+	height: 30vh;
 }

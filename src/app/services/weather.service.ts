@@ -10,6 +10,6 @@ export class WeatherService {
   constructor(private http: HttpClient) { }
 
   byCoordinates(lat: number, long: number){
-    return this.http.get('http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + long + '&appid=' + this.apiKey);
+    return this.http.get('http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + long + '&units=imperial&appid=' + this.apiKey);
   }
 }

@@ -31,12 +31,19 @@ export class AppComponent {
   getHoursMinsFromDate(date: Date){
     const hours = date.getHours();
     let hoursString = '00'
-    const minsString = date.getMinutes();
+    const mins = date.getMinutes();
+    let minsString = '00';
     if (hours > 9) {
       hoursString = hours.toString();
     }
     else {
       hoursString = '0' + hours.toString();
+    }
+    if (mins < 10) {
+      minsString = '0' + mins.toString();
+    }
+    else {
+      minsString = mins.toString();
     }
     return hoursString + ':' + minsString;
   }

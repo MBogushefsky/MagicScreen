@@ -20,11 +20,18 @@
           </div>
         </div>
       </div>
-      <div class="col-4">
-        
-      </div>
-      <div class="col-3">
-        22.0
+      <div class="col-3"></div>
+      <div class="col-4 weather">
+        <div class="row wind-and-sets">
+            Weather in near future
+        </div>
+        <div class="row current-weather" *ngIf="currentWeather">
+            <div class="col-6">Clouds</div>
+            <div class="col-6">{{currentWeather.main.temp}}&deg;</div>
+        </div>
+        <div class="row future-weather">
+            Weather in future
+        </div>
       </div>
     </div>
   </div>
