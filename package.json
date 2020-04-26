@@ -6,7 +6,6 @@
     "start": "ng serve",
     "run": "ng serve --no-live-reload",
     "build": "ng build",
-    "prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -24,6 +23,7 @@
     "@azure/msal-angular": "^1.0.0-beta.5",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "bootstrap": "^4.4.1",
+    "express": "^4.17.1",
     "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "msal": "^1.2.2",
@@ -39,7 +39,7 @@
     "@angular/language-service": "~8.2.14",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~8.9.4",
+    "@types/node": "^8.9.5",
     "angular-ide": "^0.9.74",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
@@ -53,5 +53,15 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3"
+  },
+  "browser": {
+    "crypto": false,
+    "fs": false,
+    "path": false,
+    "os": false,
+    "net": false,
+    "stream": false,
+    "tls": false,
+    "readline": false
   }
 }

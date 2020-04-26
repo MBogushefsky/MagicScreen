@@ -5,6 +5,7 @@ import { MsalService } from '@azure/msal-angular';
 import { MicrosoftGraphService } from './services/microsoft-graph.service';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
+import { CloudService } from './services/cloud.service';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent {
               public weatherService: WeatherService,
               private authService: MsalService,
               private microsoftGraphService: MicrosoftGraphService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private cloudService: CloudService) {
     setInterval(() => {
       this.currentDate = new Date();
     }, 1);
@@ -42,22 +44,22 @@ export class AppComponent {
     this.loginToOffice365();
 
     this.microsoftGraphService.getCalendarByTimeRange().subscribe((data: any) => {
-      let office365CalendarEvents = data.value.reverse();
+      const office365CalendarEvents = data.value.reverse();
       for (const event of office365CalendarEvents) {
         let daysUntil = '-';
-        if (event.start.timeZone == 'UTC') {
+        if (event.start.timeZone === 'UTC') {
           const eventStartDate = new Date(event.start.dateTime + 'Z');
-          const minutesUntil = moment(eventStartDate).diff(moment(this.currentDate), 'minutes');
-          if (minutesUntil <= this.minutesInADay) {
+          const maxMinutesUntil = moment(eventStartDate.setHours(0, 0, 0, 0)).diff(moment(this.currentDate.setHours(0, 0, 0, 0)), 'minutes');
+          if (maxMinutesUntil <= this.minutesInADay) {
             daysUntil = 'Today at ' + this.datePipe.transform(eventStartDate, 'h:mm aaa');
           }
-          else if (minutesUntil > this.minutesInADay && minutesUntil < (this.minutesInADay * 2)) {
+          else if (maxMinutesUntil > this.minutesInADay && maxMinutesUntil < (this.minutesInADay * 2)) {
             daysUntil = 'Tomorrow at ' + this.datePipe.transform(eventStartDate, 'h:mm aaa');
           }
           else {
-            daysUntil = 'in ' + Math.round((minutesUntil / this.minutesInADay)) + ' days';
+            daysUntil = 'in ' + Math.round((maxMinutesUntil / this.minutesInADay)) + ' days';
           }
-          if (minutesUntil > 0) {
+          if (maxMinutesUntil > 0) {
             this.calendar.push({
               icon: 'fa-briefcase',
               name: event.subject,
