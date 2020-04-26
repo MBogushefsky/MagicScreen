@@ -8,7 +8,7 @@
           <div class="col-2 current-time-seconds">{{currentDate | date:'ss'}}</div>
           <div class="col-5 current-time-meridiem">{{currentDate | date:'aaa'}}</div>
         </div>
-        <div class="row calendar-section">
+        <div class="row calendar-section" *ngIf="calendar.length > 0">
           <div class="col-12 calendar">
             <div class="row">
               <div class="col-12 calendar-header">CALENDAR</div>
