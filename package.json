@@ -6,7 +6,7 @@
     "start": "ng serve",
     "run": "ng serve --no-live-reload",
     "build": "ng build",
-    "prod": "ng build --aot --environment=prod --output-hashing=all --sourcemaps=false --extract-css=true --named-chunks=false --build-optimizer=true",
+    "prod": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
