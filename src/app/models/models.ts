@@ -1,6 +1,6 @@
 export class CurrentWeather {
 	coord: CoordinateInstance;
-	weather: WeatherInstance;
+	weather: WeatherInstance[];
 	main: MainInstance;
 	wind: WindInstance;
 	sys: SystemInstance;
