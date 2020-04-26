@@ -30,11 +30,17 @@ export class AppComponent {
       console.log('Current Weather ', this.weather);
     }, 1000 * 5);
     this.locationService.getPosition().then(pos =>
-    {
-      this.getWeather(pos.lat, pos.lng);
-      console.log(`Positon: ${pos.lat} ${pos.lng}`);
-    });
+      {
+        this.getWeather(pos.lat, pos.lng);
+        console.log(`Positon: ${pos.lat} ${pos.lng}`);
+      },
+      err => {
+        console.log('Error getting location: ', err)
+      }
+    );
+
     this.loginToOffice365();
+
     this.microsoftGraphService.getCalendarByTimeRange().subscribe((data: any) => {
       let office365CalendarEvents = data.value.reverse();
       for (const event of office365CalendarEvents) {
@@ -43,7 +49,7 @@ export class AppComponent {
           const eventStartDate = new Date(event.start.dateTime + 'Z');
           const minutesUntil = moment(eventStartDate).diff(moment(this.currentDate), 'minutes');
           if (minutesUntil <= this.minutesInADay) {
-            daysUntil = 'Today';
+            daysUntil = 'Today at ' + this.datePipe.transform(eventStartDate, 'h:mm aaa');
           }
           else if (minutesUntil > this.minutesInADay && minutesUntil < (this.minutesInADay * 2)) {
             daysUntil = 'Tomorrow at ' + this.datePipe.transform(eventStartDate, 'h:mm aaa');

@@ -20,7 +20,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
       auth: {
         clientId: '',
         authority: '',
-        redirectUri: null
+        redirectUri: 'http://localhost:4200'
       },
       cache: {
         cacheLocation: 'localStorage',

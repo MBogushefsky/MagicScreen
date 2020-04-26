@@ -1,7 +1,7 @@
 <div id="full-app" class="row">
   <div class="col-12">
     <div class="row">
-      <div class="col-4">
+      <div class="col-5">
         <div class="row current-date">{{ currentDate | date :'fullDate' }}</div>
         <div class="row current-time">
           <div class="col-5 current-time-hours-minutes">{{currentDate | date:'h:mm'}}</div>
@@ -14,15 +14,15 @@
               <div class="col-12 calendar-header">CALENDAR</div>
             </div>
             <div class="row calendar-instance" *ngFor="let event of calendar">
-              <div class="col-2 calendar-icon"><i class="fas {{event.icon}}"></i></div>
-              <div class="col-6 calendar-event">{{event.name}}</div>
-              <div class="col-4 calendar-date">{{event.daysUntil}}</div>
+              <div class="calendar-icon"><i class="fas {{event.icon}}"></i></div>
+              <div class="col-6 calendar-event" style="overflow:visible">{{event.name}}</div>
+              <div class="col-6 calendar-date">{{event.daysUntil}}</div>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-4"></div>
-      <div class="col-4 weather" *ngIf="weather">
+      <div class="col-2"></div>
+      <div class="col-5 weather" *ngIf="weather">
         <div class="row current-wind-and-sets">
             <div class="col-5 current-wind"><i class="fas fa-wind"></i>&nbsp;{{weather.current.wind_speed | number:'1.1-1'}}</div>
             <ng-container *ngIf="currentDate.getTime() > (weather.current.sunrise * 1000) && currentDate.getTime() < (weather.current.sunset * 1000)">
