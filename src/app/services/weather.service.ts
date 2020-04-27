@@ -14,8 +14,8 @@ export class WeatherService {
   }
 
   oneCallWeatherByCoordinates(lat: number, long: number){
-    //return this.http.get('http://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + long + '&units=imperial&appid=' + this.apiKey);
-    return this.http.get('assets/weather.json');
+    return this.http.get('http://api.openweathermap.org/data/2.5/onecall?lat=' + lat + '&lon=' + long + '&units=imperial&appid=' + this.apiKey);
+    //return this.http.get('assets/weather.json');
   }
 
   getIconUrl(icon: string){
