@@ -62,6 +62,7 @@ export class AppComponent {
 
   getCalendarEvents() {
     this.microsoftGraphService.getCalendarByTimeRange().subscribe((data: any) => {
+      this.calendar = [];
       const office365CalendarEvents = data.value.reverse();
       for (const event of office365CalendarEvents) {
         let until = '-';
