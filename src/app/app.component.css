@@ -30,12 +30,12 @@
 }
 .current-time-hours-minutes {
 	font-size: 8vw;
-	text-align: center;
+	text-align: left;
 }
 .current-time-seconds {
 	font-size: 3vw;
 	width: 100%;
-	text-align: center;
+	text-align: right;
 }
 .current-time-meridiem {
 	font-size: 8vw;

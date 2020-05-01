@@ -1,1 +1,4 @@
 /node_modules/
+src/assets/config.json
+.vscode/launch.json
+src/assets/config.json
