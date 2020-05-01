@@ -33,48 +33,56 @@ export class AppComponent {
           this.currentDate = new Date();
         }, 1);
         setInterval(() => {
-          console.log('Current Weather ', this.weather);
-        }, 1000 * 5);
-        if (this.configData.currentLatitude != null && this.configData.currentLongitude != null) {
-          this.getWeather(this.configData.currentLatitude, this.configData.currentLongitude);
-        }
-        else {
-          this.locationService.getPosition().then(pos =>
-          {
-            this.getWeather(pos.lat, pos.lng);
-            console.log(`Positon: ${pos.lat} ${pos.lng}`);
-          },
-          err => {
-            console.log('Error getting location: ', err)
-          });
-        }
+          this.getLocationAndWeather();
+        }, 1000 * 60 * 900); // Every 15 minutes
+        setInterval(() => {
+          this.getCalendarEvents();
+        }, 1000 * 60);  // Every minute
         this.loginToOffice365();
+        this.getLocationAndWeather();
         this.getCalendarEvents();
     });
+  }
+
+  getLocationAndWeather() {
+    if (this.configData.currentLatitude != null && this.configData.currentLongitude != null) {
+      this.getWeather(this.configData.currentLatitude, this.configData.currentLongitude);
+    }
+    else {
+      this.locationService.getPosition().then(pos =>
+      {
+        this.getWeather(pos.lat, pos.lng);
+        console.log(`Positon: ${pos.lat} ${pos.lng}`);
+      },
+      err => {
+        console.log('Error getting location: ', err)
+      });
+    }
   }
 
   getCalendarEvents() {
     this.microsoftGraphService.getCalendarByTimeRange().subscribe((data: any) => {
       const office365CalendarEvents = data.value.reverse();
       for (const event of office365CalendarEvents) {
-        let daysUntil = '-';
+        let until = '-';
         if (event.start.timeZone === 'UTC') {
           const eventStartDate = new Date(event.start.dateTime + 'Z');
-          const maxMinutesUntil = moment(new Date(eventStartDate).setHours(0, 0, 0, 0)).diff(moment(new Date(this.currentDate).setHours(0, 0, 0, 0)), 'minutes');
-          if (maxMinutesUntil < this.minutesInADay) {
-            daysUntil = 'Today at ' + this.datePipe.transform(eventStartDate, 'h:mm aaa');
+          const partialDaysUntil = moment(new Date(eventStartDate).setHours(0, 0, 0, 0)).diff(moment(new Date(this.currentDate).setHours(0, 0, 0, 0)), 'days');
+          const maxMinutesUntil = moment(new Date(eventStartDate)).diff(moment(new Date(this.currentDate)), 'minutes');
+          if (partialDaysUntil < 1) {
+            until = 'Today at ' + this.datePipe.transform(eventStartDate, 'h:mm aaa');
           }
-          else if (maxMinutesUntil >= this.minutesInADay && maxMinutesUntil < (this.minutesInADay * 2)) {
-            daysUntil = 'Tomorrow at ' + this.datePipe.transform(eventStartDate, 'h:mm aaa');
+          else if (partialDaysUntil >= 1 && partialDaysUntil < 2) {
+            until = 'Tomorrow at ' + this.datePipe.transform(eventStartDate, 'h:mm aaa');
           }
           else {
-            daysUntil = 'in ' + Math.round((maxMinutesUntil / this.minutesInADay)) + ' days';
+            until = 'in ' + partialDaysUntil + ' days';
           }
           if (maxMinutesUntil > 0) {
             this.calendar.push({
               icon: 'fa-briefcase',
               name: event.subject,
-              daysUntil: daysUntil
+              until: until
             });
           }
         }
@@ -82,7 +90,7 @@ export class AppComponent {
           this.calendar.push({
             icon: 'fa-briefcase',
             name: event.subject,
-            daysUntil: daysUntil
+            until: until
           });
         }
       }

@@ -30,7 +30,7 @@
 }
 .current-time-hours-minutes {
 	font-size: 8vw;
-	text-align: right;
+	text-align: center;
 }
 .current-time-seconds {
 	font-size: 3vw;
